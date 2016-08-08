@@ -5,6 +5,7 @@
 
 ?>
 
+
 <!DOCTYPE>
 <html>
 
@@ -87,6 +88,22 @@
                         </div>    
                   
                 </div>
+                
+                <hr>
+
+                <label>使用者餘額:</label>
+                
+                
+                <hr>
+                <label>使用者交易明細:</label>
+                
+                <br>
+                <br>
+                
+                
+                
+                
+                
         </div>        
     </div>
 
