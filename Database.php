@@ -61,6 +61,48 @@ class Bank
         
     }
     
+   /*--------------------------------
+   存款的方法
+   --------------------------------*/
+    
+    public function saveMoney($money)
+    {
+        
+        try
+        {
+            $this->conn->_dsnconn->beginTransaction();
+            
+            $query = "SELECT * FROM `userdata` WHERE `id`=1 FOR UPDATE";
+            
+			$result->execute();
+			
+            sleep(5);
+               
+            $query="UPDATE `userdata` SET `remain`=`remain`+ ? WHERE `id`=1 ";
+
+            $result = $this->conn->_dsnconn->prepare($query);
+
+            $result->bindValue(1, $money, PDO::PARAM_INT);
+
+            $result->execute();
+                
+            $this->conn->_dsnconn->commit();
+   
+        }    
+        catch (Exception $err) 
+        {
+			$this->conn->_dsnconn->rollback();
+			echo $err->getMessage();
+        }
+		
+	
+	}
+        
+   
+    
+    
+    
+    
     
 }
 
