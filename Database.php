@@ -20,28 +20,28 @@ class Bank
     public function getUserData()
     {
         //取的餘額
-        $query = "SELECT `remain` FROM `userdata` WHERE `userName` = 123 ";
+        $query = "SELECT `remain` FROM `userdata` WHERE `userName` = 123";
         $result = $this->conn->_dsnconn->prepare($query);
         $result->execute(); 
-        $row=$result->fetch(PDO::FETCH_ASSOC);
+        $row = $result->fetch(PDO::FETCH_ASSOC);
 
         //取得交易明細
-        $query = "SELECT * FROM `detail` WHERE `userName` = 123 ";
+        $query = "SELECT * FROM `detail` WHERE `userName` = 123";
         $result = $this->conn->_dsnconn->prepare($query);
         $result->execute(); 
-        $p=0;
-        while ($row1=$result->fetch(PDO::FETCH_ASSOC)) {
+        $p = 0;
+        while ($row1 = $result->fetch(PDO::FETCH_ASSOC)) {
             
-            $arr[$p]=[
-                "dataTime"=>$row1["dataTime"],
-                "addOrDel"=>$row1["addOrDel"],
-                "money"=>$row1["money"]
+            $arr[$p] = [
+                "dataTime" => $row1["dataTime"],
+                "addOrDel" => $row1["addOrDel"],
+                "money" => $row1["money"]
     		];
     	    $p++;
         }
         
-        $data[0]=$row["remain"];
-        $data[1]=$arr;
+        $data[0] = $row["remain"];
+        $data[1] = $arr;
         
         return $data;
     }
@@ -63,7 +63,7 @@ class Bank
             $result->execute();
             
             //餘額相加並存入資料庫
-            $query="UPDATE `userdata` SET `remain` = `remain` + ? WHERE `id` = 1 ";
+            $query = "UPDATE `userdata` SET `remain` = `remain` + ? WHERE `id` = 1";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->execute();
@@ -99,7 +99,7 @@ class Bank
             $result->execute();
             
             //餘額相減並存入資料庫
-            $query="UPDATE `userdata` SET `remain` = `remain`- ? WHERE `id` = 1 ";
+            $query = "UPDATE `userdata` SET `remain` = `remain`- ? WHERE `id` = 1";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->execute();
