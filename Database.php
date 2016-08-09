@@ -48,7 +48,6 @@ class Bank
 
     public function saveMoney($money, $accountSave)
     {
-        
         try {
             //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
