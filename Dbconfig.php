@@ -21,7 +21,8 @@ class Dbconfig
         
         try {
 
-        	$this->_dsnconn = new PDO($this->_dbms.':host='.$this->_host.';dbname='.$this->_dbname,$this->_username,$this->_password);
+        	$this->_dsnconn = new PDO($this->_dbms.':host = '.$this->_host.';
+        	                            dbname = '.$this->_dbname, $this->_username, $this->_password);
             
         	$this->_dsnconn->exec("SET CHARACTER SET utf8");
             
