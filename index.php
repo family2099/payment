@@ -1,7 +1,12 @@
 <?php
 
 // var_dump($_POST);
-
+    require_once("Dbconfig.php");
+    header("Content-Type:text/html; charset=utf-8");
+    date_default_timezone_set('Asia/Taipei');
+    
+    
+    
     if(isset($_POST["inquire"]))
     { 
     
