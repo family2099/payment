@@ -90,7 +90,6 @@ class Bank
             $result->execute();
             
             
-
             $query="UPDATE `userdata` SET `remain`=`remain`+ ? WHERE `id`=1 ";
 
             $result = $this->conn->_dsnconn->prepare($query);
@@ -112,10 +111,61 @@ class Bank
 	}
         
    
+    public function getMoney($money, $accountOut)
+    {
     
+        try
+        {
+            $this->conn->_dsnconn->beginTransaction();
+            
+            $query = "SELECT * FROM `userdata` WHERE `id`=1 FOR UPDATE";
+            
+            $result = $this->conn->_dsnconn->prepare($query);
+            
+			$result->execute();
+			
+			$row = $result->fetch();
+            sleep(5);
+            
+            if($row["remain"] >= $money)
+            {
+
+                $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (123, ?, ?)";
+                
+                $result = $this->conn->_dsnconn->prepare($query);
     
+                $result->bindValue(1, $accountOut, PDO::PARAM_INT);
+                
+                $result->bindValue(2, $money, PDO::PARAM_INT);
+                
+                $result->execute();
+                
+                
+                $query="UPDATE `userdata` SET `remain`=`remain`- ? WHERE `id`=1 ";
     
+                $result = $this->conn->_dsnconn->prepare($query);
     
+                $result->bindValue(1, $money, PDO::PARAM_INT);
+    
+                $result->execute();
+                    
+                $this->conn->_dsnconn->commit();
+                
+            }
+            else
+            {
+            	throw new Exception('餘額不足'); 
+            }
+            
+            
+        }    
+        catch (Exception $err) 
+        {
+			$this->conn->_dsnconn->rollback();
+			echo $err->getMessage();
+        }
+    
+    }
     
 }
 
