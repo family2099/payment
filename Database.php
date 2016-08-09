@@ -13,7 +13,7 @@ class Bank
     public function __construct()
     {
         
-        $this->conn = new Dbconfig();
+        $this->conn = new DbConfig();
  
     }
     
