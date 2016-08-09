@@ -72,8 +72,8 @@ class Bank
             $this->conn->_dsnconn->commit();
         } catch (Exception $err) {
             //如果失敗就取消上述動作    
-			$this->conn->_dsnconn->rollback();
-			echo $err->getMessage();
+            $this->conn->_dsnconn->rollback();
+            echo $err->getMessage();
         }
     }
 
