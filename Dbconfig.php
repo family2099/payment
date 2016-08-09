@@ -41,7 +41,7 @@ class Dbconfig
     {
  		$this->$_dsnconn = NULL;
  		
-	}
+    }
 
 
 }
