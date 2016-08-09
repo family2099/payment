@@ -54,7 +54,7 @@ class Bank
             $this->conn->_dsnconn->beginTransaction();
             $query = "SELECT * FROM `userdata` WHERE `id` = 1 FOR UPDATE";
             $result = $this->conn->_dsnconn->prepare($query);
-			$result->execute();
+            $result->execute();
 
             //存入該筆交易紀錄
             $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (123, ?, ?)";
@@ -80,14 +80,13 @@ class Bank
 
     public function getMoney($money, $accountOut)
     {
-    
         try {
             //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
             $query = "SELECT * FROM `userdata` WHERE `id` = 1 FOR UPDATE";
             $result = $this->conn->_dsnconn->prepare($query);
-			$result->execute();
-			$row = $result->fetch();
+            $result->execute();
+            $row = $result->fetch();
             
             if ($row["remain"] < $money) {
             	throw new Exception('餘額不足'); 
