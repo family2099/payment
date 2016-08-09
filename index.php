@@ -7,15 +7,11 @@
     $accountData=$account->getUserData();
    
     if (isset($_POST["save"])) { 
-    
         $account->saveMoney($_POST["saveMoney"],$_POST["accountSave"]);
-     
     }
     
     if (isset($_POST["out"])) { 
-
         $account->getMoney($_POST["outMoney"],$_POST["accountOut"]);
-    
     }
 ?>
 
