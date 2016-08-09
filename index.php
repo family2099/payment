@@ -3,7 +3,7 @@
 // var_dump($_POST);
     require_once("Database.php");
     header("Content-Type:text/html; charset=utf-8");
-    date_default_timezone_set('Asia/Taipei');
+    
     
     $account = new Bank();
     
@@ -23,7 +23,7 @@
     { 
     
         
-    
+        $account->getMoney($_POST["outMoney"],$_POST["accountOut"]);
     
     }
 
