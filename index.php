@@ -2,14 +2,14 @@
 
 // var_dump($_POST);
     require_once("Database.php");
+    
     header("Content-Type:text/html; charset=utf-8");
     
     
     $account = new Bank();
     
     $accountData=$account->getUserData();
- 
-    
+   
     if (isset($_POST["save"])) { 
     
         $account->saveMoney($_POST["saveMoney"],$_POST["accountSave"]);
@@ -22,9 +22,6 @@
         $account->getMoney($_POST["outMoney"],$_POST["accountOut"]);
     
     }
-
-
-
 
 
 ?>
