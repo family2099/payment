@@ -14,15 +14,13 @@
     { 
     
         $account->saveMoney($_POST["saveMoney"],$_POST["accountSave"]);
-        
-    
+     
     }
     
     
     if(isset($_POST["out"]))
     { 
-    
-        
+
         $account->getMoney($_POST["outMoney"],$_POST["accountOut"]);
     
     }
@@ -108,9 +106,7 @@
                                 <button type="submit" class="btn btn-default" name="out" >提款</button>
                                 
                             </form>
-                                
-                                
-                            
+               
                         </div>    
                   
                 </div>
@@ -135,8 +131,7 @@
                                 <th>日期</th>
                                 <th>事項</th>
                                 <th>金額</th>
-                                
-                                
+                  
                             </center> 
                         </tr>
                     </thead>
@@ -168,13 +163,7 @@
                 ?>
                 
                 </table>
-                
-                
-                
-                
-                
-                
-                
+
         </div>        
     </div>
 
