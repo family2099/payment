@@ -9,7 +9,7 @@
     
      
     
-    $accountData=$account->getUserData($_POST["userName"]);
+    $accountData=$account->getUserData();
     
     
     
@@ -128,6 +128,51 @@
                 
                 <br>
                 <br>
+                
+                <table class="table table-striped">
+							    		
+                    <thead>
+                        <tr>
+                            <center>
+                                
+                                <th>日期</th>
+                                <th>事項</th>
+                                <th>金額</th>
+                                
+                                
+                            </center> 
+                        </tr>
+                    </thead>
+                    
+                
+                <?php 
+                
+            
+                    foreach($accountData[1] as $value)
+                    {
+                        
+                ?>        
+                        <tr>
+                <?php             
+                        foreach($value as $detail)
+                        {
+                            
+                ?>            
+                            <td><?php echo $detail; ?></td>
+   
+                <?php            
+                        }
+                ?>        
+                        
+                        <tr>
+                <?php        
+                    }
+                
+                ?>
+                
+                </table>
+                
+                
                 
                 
                 
