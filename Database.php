@@ -16,6 +16,17 @@ class Bank
         $this->conn = new DbConfig();
     }
 
+    public function findUserId($name)
+    {
+        $query = "SELECT `id` FROM `userdata` WHERE `userName` = ?";
+        $result = $this->conn->_dsnconn->prepare($query);
+        $result->bindValue(1, $name, PDO::PARAM_STR);
+        $result->execute();
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+
+        return $row["id"];
+
+    }
     //取得使用者的餘額和交易明細
     public function getUserData($userName)
     {
