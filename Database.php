@@ -76,7 +76,7 @@ class Bank
             //存入該筆交易紀錄
             $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)";
             $result = $this->conn->_dsnconn->prepare($query);
-            $result->bindValue(1, $name, PDO::PARAM_INT);
+            $result->bindValue(1, $name, PDO::PARAM_STR);
             $result->bindValue(2, $accountSave, PDO::PARAM_INT);
             $result->bindValue(3, $money, PDO::PARAM_INT);
             $result->execute();
