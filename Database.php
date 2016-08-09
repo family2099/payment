@@ -69,7 +69,7 @@ class Bank
             //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
             
-            $query = "SELECT * FROM `userdata` WHERE `id`=1 FOR UPDATE";
+            $query = "SELECT * FROM `userdata` WHERE `id` = 1 FOR UPDATE";
             
             $result = $this->conn->_dsnconn->prepare($query);
             
@@ -89,7 +89,7 @@ class Bank
             $result->execute();
             
             //餘額相加並存入資料庫
-            $query="UPDATE `userdata` SET `remain`=`remain`+ ? WHERE `id`=1 ";
+            $query="UPDATE `userdata` SET `remain` = `remain` + ? WHERE `id` = 1 ";
 
             $result = $this->conn->_dsnconn->prepare($query);
 
@@ -118,7 +118,7 @@ class Bank
             //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
             
-            $query = "SELECT * FROM `userdata` WHERE `id`=1 FOR UPDATE";
+            $query = "SELECT * FROM `userdata` WHERE `id` = 1 FOR UPDATE";
             
             $result = $this->conn->_dsnconn->prepare($query);
             
@@ -141,7 +141,7 @@ class Bank
                 $result->execute();
                 
                 //餘額相減並存入資料庫
-                $query="UPDATE `userdata` SET `remain`=`remain`- ? WHERE `id`=1 ";
+                $query="UPDATE `userdata` SET `remain` = `remain`- ? WHERE `id` = 1 ";
     
                 $result = $this->conn->_dsnconn->prepare($query);
     
