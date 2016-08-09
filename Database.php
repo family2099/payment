@@ -158,8 +158,7 @@ class Bank
             }
             
             
-        }    
-        catch (Exception $err) 
+        } catch (Exception $err) 
         {
 			$this->conn->_dsnconn->rollback();
 			echo $err->getMessage();
