@@ -40,8 +40,7 @@ class Bank
         
         $p=0;
         
-        while($row1=$result->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($row1=$result->fetch(PDO::FETCH_ASSOC)) {
             
             $arr[$p]=array(
                             "dataTime"=>$row1["dataTime"],
@@ -66,8 +65,7 @@ class Bank
     public function saveMoney($money, $accountSave)
     {
         
-        try
-        {
+        try {
             //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
             
@@ -102,9 +100,8 @@ class Bank
             //上述都完成就寫入資料庫    
             $this->conn->_dsnconn->commit();
    
-        }    
-        catch (Exception $err) 
-        {
+        } catch (Exception $err) {
+            
             //如果失敗就取消上述動作    
 			$this->conn->_dsnconn->rollback();
 			echo $err->getMessage();
@@ -117,8 +114,7 @@ class Bank
     public function getMoney($money, $accountOut)
     {
     
-        try
-        {
+        try {
             //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
             
@@ -131,8 +127,7 @@ class Bank
 			$row = $result->fetch();
             sleep(5);
             
-            if($row["remain"] >= $money)
-            {
+            if ($row["remain"] >= $money) {
 
                 //存入該筆交易紀錄
                 $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (123, ?, ?)";
@@ -156,15 +151,13 @@ class Bank
                 //上述都完成就寫入資料庫    
                 $this->conn->_dsnconn->commit();
                 
-            }
-            else
-            {
+            } else {
+                
             	throw new Exception('餘額不足'); 
             }
             
             
-        } catch (Exception $err) 
-        {
+        } catch (Exception $err) {
             //如果失敗就取消上述動作 
 			$this->conn->_dsnconn->rollback();
 			echo $err->getMessage();
