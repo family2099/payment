@@ -4,18 +4,20 @@
     header("Content-Type:text/html; charset=utf-8");
 
     $account = new Bank();
-    $accountData=$account->getUserData();
+
 
     if (isset($_POST["userName"])) {
         $userName=$_POST["userName"];
+        $accountData=$account->getUserData($userName);
+
     }
 
     if (isset($_POST["save"])) {
-        $account->saveMoney($_POST["saveMoney"],$_POST["accountSave"]);
+        $account->saveMoney($_POST["saveMoney"], $_POST["accountSave"], $_POST["accountName"]);
     }
 
     if (isset($_POST["out"])) {
-        $account->getMoney($_POST["outMoney"],$_POST["accountOut"]);
+        $account->getMoney($_POST["outMoney"], $_POST["accountOut"], $_POST["accountName"]);
     }
 ?>
 
