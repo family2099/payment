@@ -10,16 +10,14 @@
     $accountData=$account->getUserData();
  
     
-    if(isset($_POST["save"]))
-    { 
+    if (isset($_POST["save"])) { 
     
         $account->saveMoney($_POST["saveMoney"],$_POST["accountSave"]);
      
     }
     
     
-    if(isset($_POST["out"]))
-    { 
+    if (isset($_POST["out"])) { 
 
         $account->getMoney($_POST["outMoney"],$_POST["accountOut"]);
     
@@ -140,14 +138,12 @@
                 <?php 
                 
             
-                    foreach($accountData[1] as $value)
-                    {
+                    foreach ($accountData[1] as $value) {
                         
                 ?>        
                         <tr>
                 <?php             
-                        foreach($value as $detail)
-                        {
+                        foreach ($value as $detail) {
                             
                 ?>            
                             <td><?php echo $detail; ?></td>
