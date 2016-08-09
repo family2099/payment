@@ -108,7 +108,7 @@ class Bank
         }
 		
 	
-	}
+    }
         
    
     public function getMoney($money, $accountOut)
@@ -159,8 +159,8 @@ class Bank
             
         } catch (Exception $err) {
             //如果失敗就取消上述動作 
-			$this->conn->_dsnconn->rollback();
-			echo $err->getMessage();
+            $this->conn->_dsnconn->rollback();
+            echo $err->getMessage();
         }
     
     }
