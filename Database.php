@@ -127,7 +127,7 @@ class Bank
             $query = "UPDATE `userdata` SET `remain` = `remain`- ? WHERE `id` = ?";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $id, PDO::PARAM_INT);
-            $result->bindValue(1, $money, PDO::PARAM_INT);
+            $result->bindValue(2, $money, PDO::PARAM_INT);
             $result->execute();
             //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
