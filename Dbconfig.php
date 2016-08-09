@@ -20,7 +20,7 @@ class DbConfig
     public $_dsnconn;
 
     /**
-     *    預設先連資料庫
+     * 預設先連資料庫
      */
     public function __construct()
     {
@@ -36,7 +36,7 @@ class DbConfig
 
     public function close()
     {
- 		$this->$_dsnconn = NULL;
+        $this->$_dsnconn = NULL;
     }
 }
 
