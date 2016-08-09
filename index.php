@@ -7,11 +7,8 @@
     
     $account = new Bank();
     
-     
-    
     $accountData=$account->getUserData();
-    
-    
+ 
     
     if(isset($_POST["save"]))
     { 
