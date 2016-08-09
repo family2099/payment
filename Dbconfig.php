@@ -27,7 +27,7 @@ class Dbconfig
             
             
             
-        } 
+        }
         catch (PDOException $e) {
             
         	return 'Error!: ' . $e->getMessage() . '<br />';
