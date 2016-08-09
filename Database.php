@@ -17,10 +17,10 @@ class Bank
  
     }
     
-    
+    //取得使用者的餘額和交易明細
     public function getUserData()
     {
-        
+        //取的餘額
         $query = "SELECT `remain` FROM `userdata` WHERE `userName` = 123 ";
  
         $result = $this->conn->_dsnconn->prepare($query);
@@ -30,7 +30,7 @@ class Bank
         $row=$result->fetch(PDO::FETCH_ASSOC);
         
         
-        
+        //取得交易明細
         $query = "SELECT * FROM `detail` WHERE `userName` = 123 ";
  
         $result = $this->conn->_dsnconn->prepare($query);
@@ -68,6 +68,7 @@ class Bank
         
         try
         {
+            //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
             
             $query = "SELECT * FROM `userdata` WHERE `id`=1 FOR UPDATE";
@@ -78,7 +79,7 @@ class Bank
 			
             sleep(5);
             
-
+            //存入該筆交易紀錄
             $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (123, ?, ?)";
             
             $result = $this->conn->_dsnconn->prepare($query);
@@ -89,7 +90,7 @@ class Bank
             
             $result->execute();
             
-            
+            //餘額相加並存入資料庫
             $query="UPDATE `userdata` SET `remain`=`remain`+ ? WHERE `id`=1 ";
 
             $result = $this->conn->_dsnconn->prepare($query);
@@ -97,12 +98,14 @@ class Bank
             $result->bindValue(1, $money, PDO::PARAM_INT);
 
             $result->execute();
-                
+            
+            //上述都完成就寫入資料庫    
             $this->conn->_dsnconn->commit();
    
         }    
         catch (Exception $err) 
         {
+            //如果失敗就取消上述動作    
 			$this->conn->_dsnconn->rollback();
 			echo $err->getMessage();
         }
@@ -116,6 +119,7 @@ class Bank
     
         try
         {
+            //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
             
             $query = "SELECT * FROM `userdata` WHERE `id`=1 FOR UPDATE";
@@ -130,6 +134,7 @@ class Bank
             if($row["remain"] >= $money)
             {
 
+                //存入該筆交易紀錄
                 $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (123, ?, ?)";
                 
                 $result = $this->conn->_dsnconn->prepare($query);
@@ -140,7 +145,7 @@ class Bank
                 
                 $result->execute();
                 
-                
+                //餘額相減並存入資料庫
                 $query="UPDATE `userdata` SET `remain`=`remain`- ? WHERE `id`=1 ";
     
                 $result = $this->conn->_dsnconn->prepare($query);
@@ -148,7 +153,7 @@ class Bank
                 $result->bindValue(1, $money, PDO::PARAM_INT);
     
                 $result->execute();
-                    
+                //上述都完成就寫入資料庫    
                 $this->conn->_dsnconn->commit();
                 
             }
@@ -160,6 +165,7 @@ class Bank
             
         } catch (Exception $err) 
         {
+            //如果失敗就取消上述動作 
 			$this->conn->_dsnconn->rollback();
 			echo $err->getMessage();
         }
