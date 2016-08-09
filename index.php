@@ -1,20 +1,3 @@
-<?php
-
-    require_once("Database.php");
-    header("Content-Type:text/html; charset=utf-8");
-
-    $account = new Bank();
-    $accountData=$account->getUserData();
-   
-    if (isset($_POST["save"])) { 
-        $account->saveMoney($_POST["saveMoney"],$_POST["accountSave"]);
-    }
-    
-    if (isset($_POST["out"])) { 
-        $account->getMoney($_POST["outMoney"],$_POST["accountOut"]);
-    }
-?>
-
 <!DOCTYPE>
 <html>
 <head>
@@ -34,105 +17,32 @@
                 <div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="page-header">
-                                
+
                                 <center><h1>銀行簡易系統</h1><center>
-                                
+
                             </div>
                         </div>
 
                         <div>
-                            <form role="form" method="post">
+
+                            <form role="form" method="post" action=bank.php>
                                 <div class="form-group">
-                                    
-                                    <label>使用者:123</label>
-                                
+
+                                    <label>使用者</label>
+                                    <input type="text" class="form-control" name="userName" required >
+
                                 </div>
+
+                                <button type="submit" class="btn btn-default">送出</button>
+
                             </form>
-                            
-                            <form role="form" method="post">    
-                                <div class="form-group">
-                                    
-                                    <label>存款金額</label>
-                                    <input type="number" class="form-control" name="saveMoney" min="0" required >
-                                
-                                </div>
-                                
-                                <input type="hidden" name="accountSave" value="1">
-                                <button type="submit" class="btn btn-default" name="save" >存款</button>
-                                
-                            </form>
-                            
-                            <form role="form" method="post">
-                                
-                                <div class="form-group">
-                                    
-                                    <label for="input2">提款金額</label>
-                                    <input type="number" class="form-control" name="outMoney" min="0" required >
-                                
-                                </div>
-                                 
-                                <input type="hidden" name="accountOut" value="2">
-                                
-                                <button type="submit" class="btn btn-default" name="out" >提款</button>
-                                
-                            </form>
-               
-                        </div>    
-                  
+
+                        </div>
+
                 </div>
-                
-                <hr>
 
-                <label>使用者餘額:</label><?php echo $accountData[0];?>
-                
-                <hr>
-                
-                <label>使用者交易明細:</label>
-                
-                <br>
-                <br>
-                
-                <table class="table table-striped">
-							    		
-                    <thead>
-                        <tr>
-                            <center>
-                                
-                                <th>日期</th>
-                                <th>事項</th>
-                                <th>金額</th>
-                  
-                            </center> 
-                        </tr>
-                    </thead>
-                    
-                
-                <?php 
-                
-            
-                    foreach ($accountData[1] as $value) {
-                        
-                ?>        
-                        <tr>
-                <?php             
-                        foreach ($value as $detail) {
-                            
-                ?>            
-                            <td><?php echo $detail; ?></td>
-   
-                <?php            
-                        }
-                ?>        
-                        
-                        <tr>
-                <?php        
-                    }
-                
-                ?>
-                
-                </table>
 
-        </div>        
+        </div>
     </div>
 
 </body>
