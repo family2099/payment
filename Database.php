@@ -7,7 +7,7 @@ class Bank
 {
     //data soruce name 資料來源
     private $conn;
-    
+
     /**
      *預設先連資料庫
      */
@@ -15,23 +15,25 @@ class Bank
     {
         $this->conn = new DbConfig();
     }
-    
+
     //取得使用者的餘額和交易明細
-    public function getUserData()
+    public function getUserData($userName)
     {
         //取的餘額
-        $query = "SELECT `remain` FROM `userdata` WHERE `userName` = 123";
+        $query = "SELECT `remain` FROM `userdata` WHERE `userName` = ?";
         $result = $this->conn->_dsnconn->prepare($query);
-        $result->execute(); 
+        $result->bindValue(1, $userName, PDO::PARAM_STR);
+        $result->execute();
         $row = $result->fetch(PDO::FETCH_ASSOC);
 
         //取得交易明細
-        $query = "SELECT * FROM `detail` WHERE `userName` = 123";
+        $query = "SELECT * FROM `detail` WHERE `userName` = ?";
         $result = $this->conn->_dsnconn->prepare($query);
-        $result->execute(); 
+        $result->bindValue(1, $userName, PDO::PARAM_STR);
+        $result->execute();
         $p = 0;
         while ($row1 = $result->fetch(PDO::FETCH_ASSOC)) {
-            
+
             $arr[$p] = [
                 "dataTime" => $row1["dataTime"],
                 "addOrDel" => $row1["addOrDel"],
@@ -39,10 +41,10 @@ class Bank
     		];
     	    $p++;
         }
-        
+
         $data[0] = $row["remain"];
         $data[1] = $arr;
-        
+
         return $data;
     }
 
@@ -61,17 +63,17 @@ class Bank
             $result->bindValue(1, $accountSave, PDO::PARAM_INT);
             $result->bindValue(2, $money, PDO::PARAM_INT);
             $result->execute();
-            
+
             //餘額相加並存入資料庫
             $query = "UPDATE `userdata` SET `remain` = `remain` + ? WHERE `id` = 1";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->execute();
 
-            //上述都完成就寫入資料庫    
+            //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
         } catch (Exception $err) {
-            //如果失敗就取消上述動作    
+            //如果失敗就取消上述動作
             $this->conn->_dsnconn->rollback();
             echo $err->getMessage();
         }
@@ -86,9 +88,9 @@ class Bank
             $result = $this->conn->_dsnconn->prepare($query);
             $result->execute();
             $row = $result->fetch();
-            
+
             if ($row["remain"] < $money) {
-            	throw new Exception('餘額不足'); 
+            	throw new Exception('餘額不足');
             }
 
             //存入該筆交易紀錄
@@ -97,16 +99,16 @@ class Bank
             $result->bindValue(1, $accountOut, PDO::PARAM_INT);
             $result->bindValue(2, $money, PDO::PARAM_INT);
             $result->execute();
-            
+
             //餘額相減並存入資料庫
             $query = "UPDATE `userdata` SET `remain` = `remain`- ? WHERE `id` = 1";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->execute();
-            //上述都完成就寫入資料庫    
+            //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
         } catch (Exception $err) {
-            //如果失敗就取消上述動作 
+            //如果失敗就取消上述動作
             $this->conn->_dsnconn->rollback();
             echo $err->getMessage();
         }
