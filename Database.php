@@ -59,26 +59,33 @@ class Bank
         return $data;
     }
 
-    public function saveMoney($money, $accountSave)
+    public function saveMoney($money, $accountSave, $name)
     {
         try {
             //鎖定一筆紀錄
             $this->conn->_dsnconn->beginTransaction();
-            $query = "SELECT * FROM `userdata` WHERE `id` = 1 FOR UPDATE";
+            //取得ID欄位
+            $id=$this->findUserId($name);
+
+            //鎖定一筆紀錄
+            $query = "SELECT * FROM `userdata` WHERE `id` = ? FOR UPDATE";
             $result = $this->conn->_dsnconn->prepare($query);
+            $result->bindValue(1, $id, PDO::PARAM_INT);
             $result->execute();
 
             //存入該筆交易紀錄
-            $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (123, ?, ?)";
+            $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)";
             $result = $this->conn->_dsnconn->prepare($query);
-            $result->bindValue(1, $accountSave, PDO::PARAM_INT);
-            $result->bindValue(2, $money, PDO::PARAM_INT);
+            $result->bindValue(1, $name, PDO::PARAM_INT);
+            $result->bindValue(2, $accountSave, PDO::PARAM_INT);
+            $result->bindValue(3, $money, PDO::PARAM_INT);
             $result->execute();
 
             //餘額相加並存入資料庫
-            $query = "UPDATE `userdata` SET `remain` = `remain` + ? WHERE `id` = 1";
+            $query = "UPDATE `userdata` SET `remain` = `remain` + ? WHERE `id` = ?";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
+            $result->bindValue(2, $id, PDO::PARAM_INT);
             $result->execute();
 
             //上述都完成就寫入資料庫
