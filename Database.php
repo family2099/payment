@@ -1,5 +1,6 @@
 <?php
 require_once("Dbconfig.php");
+date_default_timezone_set('Asia/Taipei');
 class Bank
 {
     
@@ -61,11 +62,8 @@ class Bank
         
     }
     
-   /*--------------------------------
-   存款的方法
-   --------------------------------*/
-    
-    public function saveMoney($money)
+
+    public function saveMoney($money, $accountSave)
     {
         
         try
@@ -74,10 +72,25 @@ class Bank
             
             $query = "SELECT * FROM `userdata` WHERE `id`=1 FOR UPDATE";
             
+            $result = $this->conn->_dsnconn->prepare($query);
+            
 			$result->execute();
 			
             sleep(5);
-               
+            
+
+            $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (123, ?, ?)";
+            
+            $result = $this->conn->_dsnconn->prepare($query);
+
+            $result->bindValue(1, $accountSave, PDO::PARAM_INT);
+            
+            $result->bindValue(2, $money, PDO::PARAM_INT);
+            
+            $result->execute();
+            
+            
+
             $query="UPDATE `userdata` SET `remain`=`remain`+ ? WHERE `id`=1 ";
 
             $result = $this->conn->_dsnconn->prepare($query);
