@@ -3,14 +3,14 @@
 class Dbconfig
 {
 
-    protected $_dbms = "mysql";             //資料庫類型 
-    protected $_host = "localhost";         //資料庫ip位址
-    protected $_port = "3306";           //資料庫埠
-    protected $_username = "root";          //資料庫用戶名
-    protected $_password = "";              //密碼
-    protected $_dbname = "bank";            //資料庫名
-    protected $_charset = "utf-8";       //資料庫字元編碼
-    protected $_dsnconn;                    //data soruce name 資料來源
+    public $_dbms = "mysql";             //資料庫類型 
+    public $_host = "localhost";         //資料庫ip位址
+    public $_port = "3306";           //資料庫埠
+    public $_username = "root";          //資料庫用戶名
+    public $_password = "";              //密碼
+    public $_dbname = "bank";            //資料庫名
+    public $_charset = "utf-8";       //資料庫字元編碼
+    public $_dsnconn;                    //data soruce name 資料來源
 
 
     /*-------------------------
@@ -38,7 +38,7 @@ class Dbconfig
     }
 
 
-    public function __destruct()
+    public function close()
     {
  		$this->$_dsnconn = NULL;
  		

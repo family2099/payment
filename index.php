@@ -1,19 +1,16 @@
 <?php
 
 // var_dump($_POST);
-    require_once("Dbconfig.php");
+    require_once("Database.php");
     header("Content-Type:text/html; charset=utf-8");
     date_default_timezone_set('Asia/Taipei');
     
+    $account = new Bank();
     
+     
     
-    if(isset($_POST["inquire"]))
-    { 
+    $accountData=$account->getUserData($_POST["userName"]);
     
-        
-    
-    
-    }
     
     
     if(isset($_POST["save"]))
@@ -79,12 +76,9 @@
                                 
                                 <div class="form-group">
                                     
-                                    <label>使用者</label>
-                                    <input type="text" class="form-control" name="userName" placeholder="輸入使用者名稱" required >
-                                    
-                                </div>
+                                    <label>使用者:123</label>
                                 
-                                <button type="submit" class="btn btn-default" name="inquire" >查詢餘額與明細</button>
+                                </div>
                                 
                             </form>
                             
@@ -126,7 +120,7 @@
                 
                 <hr>
 
-                <label>使用者餘額:</label><?php ?>
+                <label>使用者餘額:</label><?php echo $accountData[0];?>
                 
                 <hr>
                 
