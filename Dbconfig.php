@@ -1,6 +1,6 @@
 <?php
 
-class Dbconfig
+class DbConfig
 {
 
     public $_dbms = "mysql";             //資料庫類型 
