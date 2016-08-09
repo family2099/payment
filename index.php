@@ -13,8 +13,8 @@
     if(isset($_POST["save"]))
     { 
     
+        $account->saveMoney($_POST["saveMoney"],$_POST["accountSave"]);
         
-    
     
     }
     
