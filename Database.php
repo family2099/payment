@@ -113,15 +113,13 @@ class Bank
             //取得ID欄位
             $id=$this->findUserId($name);
 
-            //鎖定一筆紀錄
+            //紀錄該筆資料
             $this->conn->_dsnconn->beginTransaction();
             $query = "SELECT * FROM `userdata` WHERE `id` = ?";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $id, PDO::PARAM_INT);
             $result->execute();
             $row = $result->fetch();
-
-            sleep(5);
 
             if ($row["remain"] < $money) {
             	throw new Exception('餘額不足');
