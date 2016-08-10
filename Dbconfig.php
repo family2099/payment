@@ -23,12 +23,12 @@ class DbConfig
     public function __construct()
     {
         try {
-        	$this->_dsnconn = new PDO($this->_dbms.':host='.$this->_host.';dbname='.$this->_dbname, $this->_username, $this->_password);
-        	$this->_dsnconn->exec("SET CHARACTER SET utf8");
+            $this->_dsnconn = new PDO($this->_dbms.':host='.$this->_host.';dbname='.$this->_dbname, $this->_username, $this->_password);
+            $this->_dsnconn->exec("SET CHARACTER SET utf8");
 
         } catch (PDOException $e) {
 
-        	return 'Error!: ' . $e->getMessage() . '<br />';
+            return 'Error!: ' . $e->getMessage() . '<br />';
         }
     }
 
