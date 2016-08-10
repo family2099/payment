@@ -67,11 +67,27 @@ class Bank
             //取得ID欄位
             $id=$this->findUserId($name);
 
-            //鎖定一筆紀錄
-            $query = "SELECT * FROM `userdata` WHERE `id` = ? FOR UPDATE";
+            //讀取一筆紀錄
+            $query = "SELECT * FROM `userdata` WHERE `id` = ?";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $id, PDO::PARAM_INT);
             $result->execute();
+            $row = $result->fetch(PDO::FETCH_ASSOC);
+
+            //餘額相加並存入資料庫
+            $query = "UPDATE `userdata` SET `remain` = `remain` + ?, `version` = `version` + 1 WHERE `id` = ? AND `version` = ?";
+            $result = $this->conn->_dsnconn->prepare($query);
+            $result->bindValue(1, $money, PDO::PARAM_INT);
+            $result->bindValue(2, $id, PDO::PARAM_INT);
+            $result->bindValue(3, $row["version"], PDO::PARAM_INT);
+            $result->execute();
+            $affectRow = $result->rowCount();
+
+            //判斷是否有更新
+            if ($affectRow == 0) {
+                throw new Exception('系统繁忙，重新操作');
+            }
+
 
             //存入該筆交易紀錄
             $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)";
@@ -80,14 +96,7 @@ class Bank
             $result->bindValue(2, $accountSave, PDO::PARAM_INT);
             $result->bindValue(3, $money, PDO::PARAM_INT);
             $result->execute();
-
-            //餘額相加並存入資料庫
-            $query = "UPDATE `userdata` SET `remain` = `remain` + ? WHERE `id` = ?";
-            $result = $this->conn->_dsnconn->prepare($query);
-            $result->bindValue(1, $money, PDO::PARAM_INT);
-            $result->bindValue(2, $id, PDO::PARAM_INT);
-            $result->execute();
-
+            sleep(5);
             //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
         } catch (Exception $err) {
