@@ -27,6 +27,7 @@ class Bank
         return $row["id"];
 
     }
+
     //取得使用者的餘額和交易明細
     public function getUserData($userName)
     {
@@ -42,15 +43,16 @@ class Bank
         $result = $this->conn->_dsnconn->prepare($query);
         $result->bindValue(1, $userName, PDO::PARAM_STR);
         $result->execute();
-        $p = 0;
+
+        $init = 0;
         while ($row1 = $result->fetch(PDO::FETCH_ASSOC)) {
 
-            $arr[$p] = [
+            $arr[$init] = [
                 "dataTime" => $row1["dataTime"],
                 "addOrDel" => $row1["addOrDel"],
                 "money" => $row1["money"]
     		];
-    	    $p++;
+    	    $init++;
         }
 
         $data[0] = $row["remain"];
