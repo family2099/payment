@@ -62,8 +62,9 @@ class Bank
     public function saveMoney($money, $accountSave, $name)
     {
         try {
-            //鎖定一筆紀錄
+
             $this->conn->_dsnconn->beginTransaction();
+
             //取得ID欄位
             $id=$this->findUserId($name);
 
@@ -96,7 +97,7 @@ class Bank
             $result->bindValue(2, $accountSave, PDO::PARAM_INT);
             $result->bindValue(3, $money, PDO::PARAM_INT);
             $result->execute();
-            sleep(5);
+
             //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
         } catch (Exception $err) {
