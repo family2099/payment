@@ -1,6 +1,6 @@
 <?php
 
-require_once("Dbconfig.php");
+require_once('Dbconfig.php');
 date_default_timezone_set('Asia/Taipei');
 
 class Bank
@@ -18,7 +18,7 @@ class Bank
 
     public function findUserId($name)
     {
-        $query = "SELECT `id` FROM `userdata` WHERE `userName` = ?";
+        $query = 'SELECT `id` FROM `userdata` WHERE `userName` = ?';
         $result = $this->conn->_dsnconn->prepare($query);
         $result->bindValue(1, $name, PDO::PARAM_STR);
         $result->execute();
@@ -32,14 +32,14 @@ class Bank
     public function getUserData($userName)
     {
         //取的餘額
-        $query = "SELECT `remain` FROM `userdata` WHERE `userName` = ?";
+        $query = 'SELECT `remain` FROM `userdata` WHERE `userName` = ?';
         $result = $this->conn->_dsnconn->prepare($query);
         $result->bindValue(1, $userName, PDO::PARAM_STR);
         $result->execute();
         $row = $result->fetch(PDO::FETCH_ASSOC);
 
         //取得交易明細
-        $query = "SELECT * FROM `detail` WHERE `userName` = ?";
+        $query = 'SELECT * FROM `detail` WHERE `userName` = ?';
         $result = $this->conn->_dsnconn->prepare($query);
         $result->bindValue(1, $userName, PDO::PARAM_STR);
         $result->execute();
@@ -48,14 +48,14 @@ class Bank
         while ($row1 = $result->fetch(PDO::FETCH_ASSOC)) {
 
             $arr[$init] = [
-                "dataTime" => $row1["dataTime"],
-                "addOrDel" => $row1["addOrDel"],
-                "money" => $row1["money"]
+                'dataTime' => $row1['dataTime'],
+                'addOrDel' => $row1['addOrDel'],
+                'money' => $row1['money']
     		];
     	    $init++;
         }
 
-        $data[0] = $row["remain"];
+        $data[0] = $row['remain'];
         $data[1] = $arr;
 
         return $data;
@@ -71,14 +71,14 @@ class Bank
             $id=$this->findUserId($name);
 
             //紀錄該筆資料
-            $query = "SELECT * FROM `userdata` WHERE `id` = ?";
+            $query = 'SELECT * FROM `userdata` WHERE `id` = ?';
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $id, PDO::PARAM_INT);
             $result->execute();
             $row = $result->fetch(PDO::FETCH_ASSOC);
 
             //餘額相加並存入資料庫
-            $query = "UPDATE `userdata` SET `remain` = `remain` + ?, `version` = `version` + 1 WHERE `id` = ? AND `version` = ?";
+            $query = 'UPDATE `userdata` SET `remain` = `remain` + ?, `version` = `version` + 1 WHERE `id` = ? AND `version` = ?';
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->bindValue(2, $id, PDO::PARAM_INT);
@@ -92,7 +92,7 @@ class Bank
             }
 
             //存入該筆交易紀錄
-            $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)";
+            $query = 'INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)';
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $name, PDO::PARAM_STR);
             $result->bindValue(2, $accountSave, PDO::PARAM_INT);
@@ -117,18 +117,18 @@ class Bank
 
             //紀錄該筆資料
             $this->conn->_dsnconn->beginTransaction();
-            $query = "SELECT * FROM `userdata` WHERE `id` = ?";
+            $query = 'SELECT * FROM `userdata` WHERE `id` = ?';
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $id, PDO::PARAM_INT);
             $result->execute();
             $row = $result->fetch();
 
-            if ($row["remain"] < $money) {
+            if ($row['remain'] < $money) {
             	throw new Exception('餘額不足');
             }
 
             //餘額相減並存入資料庫
-            $query = "UPDATE `userdata` SET `remain` = `remain` - ?, `version` = `version` + 1 WHERE `id` = ? AND `version` = ?";
+            $query = 'UPDATE `userdata` SET `remain` = `remain` - ?, `version` = `version` + 1 WHERE `id` = ? AND `version` = ?';
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->bindValue(2, $id, PDO::PARAM_INT);
@@ -142,7 +142,7 @@ class Bank
             }
 
             //存入該筆交易紀錄
-            $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)";
+            $query = 'INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)';
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $name, PDO::PARAM_STR);
             $result->bindValue(2, $accountOut, PDO::PARAM_INT);
