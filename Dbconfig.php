@@ -3,7 +3,7 @@
 class DbConfig
 {
     //資料庫類型
-    public $_dbms = "mysql";              
+    public $_dbms = "mysql";
     //資料庫ip位址
     public $_host = "localhost";
     //資料庫埠
@@ -14,8 +14,6 @@ class DbConfig
     public $_password = "";
     //資料庫名
     public $_dbname = "bank";
-    //資料庫字元編碼
-    public $_charset = "utf-8";
     //data soruce name 資料來源
     public $_dsnconn;
 
@@ -29,7 +27,7 @@ class DbConfig
         	$this->_dsnconn->exec("SET CHARACTER SET utf8");
 
         } catch (PDOException $e) {
-            
+
         	return 'Error!: ' . $e->getMessage() . '<br />';
         }
     }
