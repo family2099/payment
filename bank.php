@@ -5,11 +5,9 @@
 
     $account = new Bank();
 
-
     if (isset($_POST["userName"])) {
         $userName=$_POST["userName"];
         $accountData=$account->getUserData($userName);
-
     }
 
     if (isset($_POST["save"])) {
