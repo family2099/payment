@@ -101,6 +101,7 @@ class Bank
 
             //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
+
         } catch (Exception $err) {
             //如果失敗就取消上述動作
             $this->conn->_dsnconn->rollback();
@@ -150,6 +151,7 @@ class Bank
 
             //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
+
         } catch (Exception $err) {
             //如果失敗就取消上述動作
             $this->conn->_dsnconn->rollback();
