@@ -68,7 +68,7 @@ class Bank
             //取得ID欄位
             $id=$this->findUserId($name);
 
-            //讀取一筆紀錄
+            //紀錄該筆資料
             $query = "SELECT * FROM `userdata` WHERE `id` = ?";
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $id, PDO::PARAM_INT);
@@ -88,7 +88,6 @@ class Bank
             if ($affectRow == 0) {
                 throw new Exception('系统繁忙，重新操作');
             }
-
 
             //存入該筆交易紀錄
             $query = "INSERT INTO `detail` (userName, addOrDel, money) VALUES (?, ?, ?)";
