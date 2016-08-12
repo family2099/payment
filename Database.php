@@ -1,6 +1,5 @@
 <?php
 
-namespace myProject;
 require_once("Dbconfig.php");
 date_default_timezone_set('Asia/Taipei');
 
