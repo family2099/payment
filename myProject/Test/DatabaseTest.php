@@ -9,17 +9,27 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testFindUserId() {
-        $paramCount = 123;
-        // $paramWhat = "*";
+        $userName = 123;
         $expectedResult = "1";
 
-        $tool = new Database();
-        $result = $tool->findUserId($paramCount);
+        $findUserId = new Database();
+        $result = $findUserId->findUserId($userName);
 
         $this->assertEquals($expectedResult, $result);
     }
 
+    public function testGetUserData()
+    {
+        $userName = 123;
+        $expectedRemain = "24000";
+        $expectedmoney = "1000";
 
+        $getUserData = new Database();
+        $result = $getUserData->getUserData($userName);
+
+        $this->assertEquals($expectedRemain, $result[0]);
+        $this->assertEquals($expectedmoney, $result[1][0]['money']);
+    }
 
 
 
