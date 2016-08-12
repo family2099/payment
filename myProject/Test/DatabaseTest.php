@@ -21,7 +21,7 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
     public function testGetUserData()
     {
         $userName = 123;
-        $expectedRemain = "24000";
+        $expectedRemain = "30000";
         $expectedmoney = "1000";
 
         $getUserData = new Database();
@@ -31,7 +31,16 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedmoney, $result[1][0]['money']);
     }
 
+    public function testSaveMoney()
+    {
+        $money = 1000;
+        $accountSave = 1;
+        $name = 123;
 
+        $saveMoney = new Database();
+        $result = $saveMoney->saveMoney($money , $accountSave, $name);
+        $this->assertEmpty($result);
+    }
 
 
 }
