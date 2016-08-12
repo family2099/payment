@@ -42,5 +42,14 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($result);
     }
 
+    public function testGetMoney()
+    {
+        $money = 1000;
+        $accountSave = 2;
+        $name = 123;
 
+        $getMoney = new Database();
+        $result = $getMoney->getMoney($money , $accountSave, $name);
+        $this->assertEmpty($result);
+    }
 }
