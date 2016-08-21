@@ -6,7 +6,7 @@ date_default_timezone_set('Asia/Taipei');
 class Bank
 {
     //data soruce name 資料來源
-    private $conn;
+    public $conn;
 
     /**
      *預設先連資料庫
@@ -67,6 +67,10 @@ class Bank
             //取得ID欄位
             $id=$this->findUserId($name);
 
+            if ($money==0) {
+                throw new Exception('存款失敗');
+            }
+
             //鎖定一筆紀錄
             $query = "SELECT * FROM `userdata` WHERE `id` = ? FOR UPDATE";
             $result = $this->conn->_dsnconn->prepare($query);
@@ -86,7 +90,6 @@ class Bank
             $result = $this->conn->_dsnconn->prepare($query);
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->bindValue(2, $id, PDO::PARAM_INT);
-            $result->execute();
 
             //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
@@ -129,6 +132,7 @@ class Bank
             $result->bindValue(1, $money, PDO::PARAM_INT);
             $result->bindValue(2, $id, PDO::PARAM_INT);
             $result->execute();
+
             //上述都完成就寫入資料庫
             $this->conn->_dsnconn->commit();
         } catch (Exception $err) {
